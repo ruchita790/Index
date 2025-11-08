@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday My Love 💖</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        overflow: hidden;
+        color: #333;
+        opacity: 0;
+        animation: fadeIn 3s ease forwards;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .container {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        max-width: 600px;
+        background: rgba(255, 255, 255, 0.85);
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    img.main-photo {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-bottom: 20px;
+        opacity: 0;
+        animation: fadeInImage 3s ease forwards 2s;
+    }
+
+    @keyframes fadeInImage {
+        from { opacity: 0; transform: scale(0.8); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    h1 {
+        color: #ff6699;
+        margin-bottom: 10px;
+    }
+
+    p {
+        font-size: 18px;
+        line-height: 1.5;
+    }
+
+    #surpriseBtn {
+        margin-top: 20px;
+        padding: 12px 24px;
+        border: none;
+        background-color: #ff6699;
+        color: white;
+        font-size: 16px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    #surpriseBtn:hover {
+        background-color: #ff3385;
+    }
+
+    #secretMessage {
+        display: none;
+        margin-top: 20px;
+        opacity: 0;
+        animation: fadeInSecret 2s ease forwards;
+    }
+
+    @keyframes fadeInSecret {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    #secretMessage img {
+        width: 250px;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 20px;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        margin-top: 10px;
+        opacity: 0;
+        animation: fadeInPhoto 3s ease forwards;
+    }
+
+    @keyframes fadeInPhoto {
+        from { opacity: 0; transform: scale(0.9); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    #typedText {
+        font-size: 18px;
+        color: #d63384;
+        margin-top: 20px;
+        white-space: pre-line;
+        text-align: center;
+        opacity: 0;
+        animation: fadeInText 2s ease forwards;
+        border-right: 2px solid #d63384;
+        padding-right: 5px;
+    }
+
+    @keyframes fadeInText {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+    }
+</style>
+</head>
+<body>
+
+<!-- Fireworks background -->
+<canvas id="fireworks"></canvas>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2023/03/13/audio_7b5c6b0a65.mp3?filename=romantic-piano-145601.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Main content -->
+<div class="container">
+    <img class="main-photo" src="photo1.jpg" alt="Our Photo">
+    <h1>Happy Birthday, My Love 🎉💖</h1>
+    <p>
+        Every moment with you feels like a dream come true.  
+        On your special day, I just want to remind you how much you mean to me.  
+        You are my light, my happiness, and my forever love.  
+        Happy Birthday, my heart! 💌
+    </p>
+    <button id="surpriseBtn">Click for Your Surprise 🎁</button>
+
+    <!-- Secret Message Section -->
+    <div id="secretMessage">
+        <img id="secretImage" src="pic.jpeg" alt="Our Special Moment 💕">
+        <p id="typedText"></p>
+    </div>
+</div>
+
+<script>
+    const btn = document.getElementById('surpriseBtn');
+    const secret = document.getElementById('secretMessage');
+    const secretImage = document.getElementById('secretImage');
+    const bgMusic = document.getElementById('bgMusic');
+    const typedText = document.getElementById('typedText');
+
+    const message = 
+`💘 Happy Birthday Papa, many many happy returns of the day.
+You are my support system, my strength, my everything.
+You are not just my life partner, but my crime partner and food partner too.
+I have only one true and best friend, and that's you.
+I love you, Papa. 💖
+
+A short note for you:
+💘 My Love, you are the reason my heart smiles every day.
+This picture reminds me how lucky I am to have you.
+May your birthday be filled with laughter, love, and everything beautiful — just like you. 💞`;
+
+    // Reveal section + fade-in effects
+    btn.addEventListener('click', () => {
+        secret.style.display = 'block';
+        btn.style.display = 'none';
+        secret.style.animation = 'fadeInSecret 2s ease forwards';
+
+        // fade-in the image after a short delay
+        setTimeout(() => {
+            secretImage.style.opacity = 1;
+            secretImage.style.animation = 'fadeInPhoto 3s ease forwards';
+        }, 1000);
+
+        // start background music (with soft fade)
+        bgMusic.volume = 0;
+        bgMusic.play();
+        let volume = 0;
+        const fade = setInterval(() => {
+            if (volume < 1) {
+                volume += 0.02;
+                bgMusic.volume = volume;
+            } else clearInterval(fade);
+        }, 200);
+
+        // start typing text after image fade-in
+        setTimeout(() => {
+            typeText(message);
+        }, 3500);
+    });
+
+    // Typing effect
+    function typeText(text) {
+        typedText.style.opacity = 1;
+        let i = 0;
+        const speed = 50;
+        const typing = setInterval(() => {
+            typedText.textContent = text.slice(0, i);
+            i++;
+            if (i > text.length) {
+                clearInterval(typing);
+                typedText.style.borderRight = "none";
+            }
+        }, speed);
+    }
+
+    // 🎆 Fireworks animation
+    const canvas = document.getElementById("fireworks");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+    let w, h;
+
+    function resizeCanvas() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+        constructor(x, y, color, speed, angle, life) {
+            this.x = x;
+            this.y = y;
+            this.color = color;
+            this.speed = speed;
+            this.angle = angle;
+            this.life = life;
+            this.remainingLife = life;
+        }
+        update() {
+            const rad = this.angle * Math.PI / 180;
+            this.x += Math.cos(rad) * this.speed;
+            this.y += Math.sin(rad) * this.speed;
+            this.remainingLife--;
+            this.speed *= 0.98;
+        }
+        draw() {
+            const opacity = Math.max(this.remainingLife / this.life, 0);
+            ctx.fillStyle = `rgba(${this.color},${opacity})`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function createFirework(x, y) {
+        const colors = ["255,99,132", "255,215,0", "0,191,255", "144,238,144", "255,105,180"];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        for (let i = 0; i < 80; i++) {
+            const angle = Math.random() * 360;
+            const speed = Math.random() * 5 + 2;
+            particles.push(new Particle(x, y, color, speed, angle, 100));
+        }
+    }
+
+    function loop() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
+        ctx.fillRect(0, 0, w, h);
+
+        particles.forEach((p, i) => {
+            p.update();
+            p.draw();
+            if (p.remainingLife <= 0) particles.splice(i, 1);
+        });
+
+        requestAnimationFrame(loop);
+    }
+
+    loop();
+
+    // Random fireworks bursts
+    setInterval(() => {
+        const x = Math.random() * w;
+        const y = Math.random() * h * 0.5;
+        createFirework(x, y);
+    }, 1000);
+</script>
+
+</body>
+</html>
